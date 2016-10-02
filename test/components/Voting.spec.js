@@ -41,7 +41,20 @@ test('invokes a callback when the a button is clicked', t => {
 test('disables buttons when user has voted', t => {
   const testPair = ['uno', 'dos']
   const wrapper = mount(<Voting pair={testPair} hasVoted={testPair[0]}/>)
-  console.log(wrapper.find('button').first().html())
   t.equal(wrapper.find('button[disabled]').length, 2)
+  t.end()
+})
+
+test('adds label to the voted entry', t => {
+  const testPair = ['uno', 'dos']
+  const wrapper = mount(<Voting pair={testPair} hasVoted={testPair[0]}/>)
+  const buttonText = wrapper.find(`button`).first().text().toLowerCase()
+  t.assert(buttonText.indexOf('voted') !== -1)
+  t.end()
+})
+
+test('renders just the winner when there is one', t => {
+  const wrapper = mount(<Voting winner="FTW" />)
+  t.assert(wrapper.find('.winner').first())
   t.end()
 })
